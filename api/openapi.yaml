@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: anmi.asm@gmail.com
+  description: Tiny tracker server API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Tiny tracker
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/v1
+paths:
+  /auth/user:
+    get:
+      description: Get current user info
+      operationId: getCurrentUser
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentUser'
+          description: Current User Info
+      tags:
+      - auth
+    post:
+      description: Sign up user
+      operationId: signUp
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/SignUpForm'
+      responses:
+        "200":
+          description: Success
+      tags:
+      - auth
+  /auth/session:
+    delete:
+      description: Log out
+      operationId: logOut
+      parameters: []
+      responses:
+        "200":
+          description: Logged out
+      tags:
+      - auth
+    post:
+      description: ""
+      operationId: signIn
+      parameters: []
+      requestBody:
+        $ref: '#/components/requestBodies/SignInForm'
+      responses:
+        "200":
+          description: Logged in
+      tags:
+      - auth
+components:
+  callbacks: {}
+  links: {}
+  requestBodies:
+    SignUpForm:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignUpForm'
+    SignInForm:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SignInForm'
+  schemas:
+    SignInForm:
+      example:
+        password: password
+        username: username
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      type: object
+    SignUpForm:
+      example:
+        password: password
+        email: email
+        username: username
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      type: object
+    CurrentUser:
+      example:
+        email: email
+        username: username
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+      type: object
